@@ -29,25 +29,27 @@ def setup():
     pass
     # 1. Use size(width, height) to set the width and height of the window
     #size(400, 440)
+    size(400, 440)
     
     # 2. Use the initialize_game_data() function to set up the game header
     #initialize_game_data()
+    initialize_game_data()
     
     # 3. Use the initialize_cells() function to set up the playing grid cells
+    initialize_cells()
     
     # 4. Use the initialize_mines() function to randomly place the mines
-
+    initialize_mines()
 
 def draw():
-    pass
     # 5. Use an if statement to check if the 'game_ready' variable is set to True
-        
+    if game_ready:
         # 6. Use background(color) to set the game's background
         # Do you see your color when you run the code?
-        
+        background(255, 255, 255)
         # 7. Use the draw_game_header() function to draw the game's header
         # Skip down and complete the draw_game_header() function
-        
+        draw_game_header()
         # 8. Complete the instructions in draw_game_header() below FIRST!
 
         # 12. Use a for loop to go through each cell in the 'cells' list variable 
@@ -72,20 +74,24 @@ def draw():
 # Draw top game header with # mines, start button, elapsed time
 #            
 def draw_game_header():
-    pass
+    
     # 9. Use the text("my text", x, y) function to draw the remaining number
     # of mines at the top of window
     #    - num_of_mines variable holds the total number of mines in the game
     #    - mines_flagged variable holds the number of mines that have been flagged
     #    - Use fill(color) to change the text color
     #    - Use textSize(int_size) to change the size of the text
+    fill(0, 0, 0)
+    textSize(20)
+    text("Number of mines left: " + str(num_of_mines - mines_flagged), 80, 400)
 
     # 10. Use the text("my text", x, y) function to draw the game time
     #    - the 'game_time_sec' variable holds the number of seconds
     #      since the game started
-    
+    text("Game time: " + str(game_time_sec), 125, 420)
     # 11. Call draw() from the start_button to draw the start button
     # Do you see the start button, mines left, and game timer?
+    start_button.draw()
 
 
 
