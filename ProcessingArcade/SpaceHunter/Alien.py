@@ -29,6 +29,8 @@ class Alien:
         if alien_type is None:
             alien_type = int(random(1, 5))
             
+        self.hasHitBase = False 
+        
         self.image = Alien.alien_types[alien_type]
         self.speed = speed
         self.x_speed = None

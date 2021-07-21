@@ -2,6 +2,7 @@
 from Alien import Alien
 from EnergyBar import EnergyBar
 from Shot import Shot
+from Base import Base
 
 def setup():
     global bg, aliens, shots, energy_bar, crosshair, base
@@ -9,7 +10,7 @@ def setup():
     
     # 1. Use the fullScreen() function to make the game window the entire screen
     fullScreen()
-    
+
     # 2. Initialize the 'bg' variable for the background image
     #    bg = loadImage("spaceBg.png")
     bg = loadImage("spaceBg.png")
@@ -20,7 +21,7 @@ def setup():
     bg.resize(width, height)
 
     base = Base()
-    base.resize(150, 150)
+    
     # 5. Initialize the 'energy_bar' variable to an EnergyBar()
     # energy_bar = EnergyBar()
     energy_bar = EnergyBar()
@@ -52,8 +53,7 @@ def draw():
     # Do you see the background when you run the code?
     image(bg, width/2, height/2)
     
-    image(base, width/2, height/2)
-    
+    base.draw()
     
     # 11. Use the energy_bar's draw() method to display it on the game
     # Do you see the energy bar on the screen?
@@ -111,11 +111,16 @@ def draw():
                 # The score will be draw later so it won't appear on the game yet
                 score = score + 1
 
-    
-    if is_collision(base, alien):
-        textSize(200)
-        fill(0, 0, 0)
-        text("Game Over!", width/2, height/2)
+    for alien in aliens:
+        if is_collision(base, alien) and not alien.hasHitBase:
+            textSize(200)
+            fill(0, 0, 0)
+            alien.hasHitBase = True
+            base.hp = base.hp - 1
+            
+            if base.hp == 0:
+                text("Game Over!", width/5, height/3)
+                noLoop()
     
     # 25. Call the purge_objects() function to remove aliens and other objects from the game
     # Do you see the aliens disappear when they're shot?
@@ -128,6 +133,7 @@ def draw():
     textSize(50)
     fill(0, 0, 0)
     text("Score = " + str(score), 50, 70)
+    text("Lives = " + str(base.hp), 50, 140)
 
     # 27. Call the update_timer() function to count down the game's time
     # Do you see the game time counting down?
@@ -159,7 +165,7 @@ def display_intro():
         text("Press 's' to start", width/3, height/2)
         textSize(36)
         intro  = "Click the mouse to shoot as many\n"
-        intro += "          UFOs in " + str(time_remaining) + " seconds"
+        intro += "          UFOs in " + str(time_remaining) + " seconds, \nand protect the base from the aliens!"
         text(intro, (width/3) + 50, (height/2) + 100)    
         return True
     return False
@@ -263,12 +269,17 @@ def fire_shot():
 def is_collision(shot, alien):
     c1x = shot.x
     c1y = shot.y
-    c1r = Shot.collision_radius
+    c1r = shot.collision_radius
     c2x = alien.x
     c2y = alien.y
     c2r = Alien.collision_radius
     dist_x = c1x - c2x
     dist_y = c1y - c2y
     distance = sqrt( (dist_x * dist_x) + (dist_y * dist_y) )
+    
+    # Uncomment to see collision boxes
+    #fill(255, 255, 255)
+    #ellipse( c1x, c1y, 2*c1r, 2*c1r )
+    #ellipse( c2x, c2y, 2*c2r, 2*c2r )
     
     return distance <= (c1r + c2r)
