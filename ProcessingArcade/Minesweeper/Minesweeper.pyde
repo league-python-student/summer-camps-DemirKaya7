@@ -29,7 +29,7 @@ def setup():
     pass
     # 1. Use size(width, height) to set the width and height of the window
     #size(400, 440)
-    size(400, 440)
+    size(400, 520)
     
     # 2. Use the initialize_game_data() function to set up the game header
     #initialize_game_data()
@@ -53,14 +53,16 @@ def draw():
         # 8. Complete the instructions in draw_game_header() below FIRST!
 
         # 12. Use a for loop to go through each cell in the 'cells' list variable 
-            
+        for cell in cells:
             # 13. Call each cell's draw() method
             # Do you see the grid of cells?
+            cell.draw()
 
         
         # 14. Use the update_game_time() function to count the game seconds
         # when the game starts.
         # Does the game start counting up the seconds when the start button is pressed?
+        update_game_time()
 
         
         # *** ENHANCEMENTS ***
@@ -83,12 +85,12 @@ def draw_game_header():
     #    - Use textSize(int_size) to change the size of the text
     fill(0, 0, 0)
     textSize(20)
-    text("Number of mines left: " + str(num_of_mines - mines_flagged), 80, 400)
+    text("Number of mines left: " + str(num_of_mines - mines_flagged), 80, 470)
 
     # 10. Use the text("my text", x, y) function to draw the game time
     #    - the 'game_time_sec' variable holds the number of seconds
     #      since the game started
-    text("Game time: " + str(game_time_sec), 125, 420)
+    text("Game time: " + str(game_time_sec), 125, 500)
     # 11. Call draw() from the start_button to draw the start button
     # Do you see the start button, mines left, and game timer?
     start_button.draw()
